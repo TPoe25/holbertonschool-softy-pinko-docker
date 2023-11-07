@@ -1,0 +1,30 @@
+version: '3'
+services:
+  proxy:
+    image: task5-proxy
+    ports:
+      - "80:80"
+    volumes:
+    - ./path/to/nginx/config:/etc/nginx:ro
+    depends_on:
+      - back-end
+      - back-end2
+    networks:
+      - app-network
+
+  back-end:
+    image: task5-softy-pinko-back-end
+    expose:
+      - "5252"
+    networks:
+      - app-network
+
+  back-end2:
+    image: task5-softy-pinko-back-end
+    expose:
+      - "5252"
+    networks:
+      - app-network
+
+networks:
+  app-network:
