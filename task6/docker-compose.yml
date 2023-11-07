@@ -1,36 +1,17 @@
 version: '3'
 services:
-  softy-pinko-back-end1:
-    build:
-      context: ./back-end
-      dockerfile: Dockerfile
-    container_name: softy-pinko-back-end1
+  back-end:
+    image: task5-softy-pinko-front-end:latest
 
-  softy-pinko-back-end2:
-    build:
-      context: ./back-end
-      dockerfile: Dockerfile
-    container_name: softy-pinko-back-end2
-
-  softy-pinko-front-end:
-    build:
-      context: ./front-end
-      dockerfile: Dockerfile
-    ports:
-      - "9000:80"
+  front-end:
+    image: task5-softy-pinko-front-end:latest
     depends_on:
-      - softy-pinko-back-end1
-      - softy-pinko-back-end2
+      - back-end
 
-  nginx:
-    image: nginx
+  proxy:
+    image: task5-proxy:latest
     ports:
       - "80:80"
     depends_on:
-      - softy-pinko-back-end1
-      - softy-pinko-back-end2
-    networks:
-      - my_network
-
-networks:
-  my_network:
+      - back-end
+      - front-end
