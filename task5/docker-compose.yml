@@ -4,17 +4,11 @@ services:
     build:
       context: ./back-end
       dockerfile: Dockerfile
-    ports:
-      - "5252:5252"
 
   softy-pinko-front-end:
     build:
       context: ./front-end
       dockerfile: Dockerfile
-    ports:
-      - "9000:80"
-    depends_on:
-      - softy-pinko-back-end
 
   proxy:
     build:
@@ -22,3 +16,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+    depends_on:
+      - softy-pinko-front-end
+      - softy-pinko-back-end

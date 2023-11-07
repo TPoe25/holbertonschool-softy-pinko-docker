@@ -1,1 +1,1 @@
-docker-compose up --scale api_server=2
+docker-compose up --scale softy-pinko-back-end=2
