@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yml up -d --scale back-end=2
+docker-compose up --scale

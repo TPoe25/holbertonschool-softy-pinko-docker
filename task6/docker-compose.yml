@@ -1,30 +1,36 @@
 version: '3'
 services:
-  proxy:
-    image: task5-proxy
+  softy-pinko-back-end1:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: softy-pinko-back-end1
+
+  softy-pinko-back-end2:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: softy-pinko-back-end2
+
+  softy-pinko-front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - "9000:80"
+    depends_on:
+      - softy-pinko-back-end1
+      - softy-pinko-back-end2
+
+  nginx:
+    image: nginx
     ports:
       - "80:80"
-    volumes:
-    - ./path/to/nginx/config:/etc/nginx:ro
     depends_on:
-      - back-end
-      - back-end2
+      - softy-pinko-back-end1
+      - softy-pinko-back-end2
     networks:
-      - app-network
-
-  back-end:
-    image: task5-softy-pinko-back-end
-    expose:
-      - "5252"
-    networks:
-      - app-network
-
-  back-end2:
-    image: task5-softy-pinko-back-end
-    expose:
-      - "5252"
-    networks:
-      - app-network
+      - my_network
 
 networks:
-  app-network:
+  my_network:
